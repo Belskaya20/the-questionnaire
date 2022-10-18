@@ -6,27 +6,31 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   // Здесь твой код
-  fetch(`http://46.21.248.81:3001/user`), {
+  fetch(`http://46.21.248.81:3001/user`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer: Belskaya20'
     },
-    body: JSON.stringify({
-      name: "Kseniya",
-      secondName: "Belskaya",
-      phone: "375291251119",
-      email: "kseniyabelskaya@gmail.com",
-      agree: true
+    //body: JSON.stringify({
+      //name: "Kseniya",
+      //secondName: "Belskaya",
+      //phone: "375291251119",
+      //email: "kseniyabelskaya@gmail.com",
+      //agree: true
+    //})     Вот это писать не нужно?
+  })
+    .then((result) => {
+      return result.json();
     })
-      .then((result) => {
-        return result.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
-  }
-})  
+})
 
 button.addEventListener('click', updateButton);
 function updateButton() {
@@ -35,5 +39,5 @@ function updateButton() {
     document.getElementById('.form').reset();
   } else {
     button.value = 'Неверно ввели данные!';
-}
+  }
 }
