@@ -1,5 +1,10 @@
 const form = document.querySelector(".form");
-const button = document.querySelector('input');
+const nameInput = document.querySelector("#name");
+const secondNameInput = document.querySelector("#secondName");
+const emailInput = document.querySelector("#email");
+const phoneInput = document.querySelector("#phone");
+
+
 form.addEventListener("submit", (event) => {
   // Предотвращает действие браузера по умолчанию. В данном случае — отправку формы
   // https://learn.javascript.ru/default-browser-action
@@ -9,35 +14,45 @@ form.addEventListener("submit", (event) => {
   fetch(`http://46.21.248.81:3001/user`, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': 'Bearer: Belskaya20'
     },
-    //body: JSON.stringify({
-      //name: "Kseniya",
-      //secondName: "Belskaya",
-      //phone: "375291251119",
-      //email: "kseniyabelskaya@gmail.com",
-      //agree: true
-    //})     Вот это писать не нужно?
+    body: JSON.stringify({
+      "name": nameInput.value,
+      "secondName": secondNameInput.value,
+      "phone": phoneInput.value,
+      "email": emailInput.value,
+      "agree": true
+    })
   })
     .then((result) => {
-      return result.json();
+      if (result.ok) {
+        alert('Отправлено!');
+        form.reset();
+      }
     })
     .then((data) => {
       console.log(data);
     })
     .catch((error) => {
-      console.log(error);
+      alert('Ошибка, попробуйте еще раз!');
     })
 
 })
 
-button.addEventListener('click', updateButton);
-function updateButton() {
-  if (button.value === 'Отправить') {
-    button.value = 'Отправлено!';
-    document.getElementById('.form').reset();
-  } else {
-    button.value = 'Неверно ввели данные!';
-  }
-}
+
+
+
+fetch(`http://46.21.248.81:3001/last-user`, {
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer: Belskaya20'
+  },
+})
+  .then((result) => {
+    return result.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
